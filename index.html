@@ -13,6 +13,12 @@
     span{
       font-weight: bold;
     }
+    ul{
+      padding: 0px;
+    }
+    li{
+      list-style: none;
+    }
     </style>
 
   </head>
@@ -51,18 +57,74 @@
     function span(id,value){
       return '<span id="'+id+'">'+value+'</span>'
     }
-    function paragraph(number,string,answer){
-      var numberString = number.toString();
-      var html = `<p id="question'+numberString+'">
-      `+ numberString+`.<br>`+ string+`<input id="input
-      `+ numberString+`" type="number"> <button onclick="enterQuestion
-      `+ numberString+`()">Enter</button><button onclick="createQuestion
-      `+ numberString+`()">Reset</button></p>`;
+
+    enterQuestionFunctionsArray = [];
+    resetFunctionArray = [];
+    liHtmlArray = [];
+
+    function createEnterFunction(num,answer){
+      return function(){
+        testQuestion(answer,getInputValue('input'+num));
+      }
+    }
+    function fillInUlHtml(){
+      for (var i = 0; i < liHtmlArray.length; i++) {
+        document.querySelector('#questionsUl').innerHTML += liHtmlArray[i];
+      }
+    }
+
+    function paragraph(string,answer){
+      number = enterQuestionFunctionsArray.length + 1;
+
+      resetFunctionArray.push(
+        createResetFunction(number,string,answer)
+      );
+      var paragraphDuplicateFunction = function(){
+        return paragraph(string,answer);
+      }
+      enterQuestionFunctionsArray.push(
+        createEnterFunction(number,answer)
+      )
+      var html = `<li id="li`+number+`"><p id="question`+number+`">`+ number+`.<br>`+ string+`<input id="input`+ number+`"type="number"> <button onclick="enterQuestionFunctionsArray[`+(number-1)+`]()">Enter</button><button onclick="resetFunctionArray[`+(number-1)+`]()">Reset</button></p></li>`;
+      liHtmlArray.push(html);
+      fillInUlHtml();
+
       return html;
     }
 
+    function resetQuestion(number,string,answer){
+        var html = `<li id="li`+number+`"><p id="question`+number+`">`+ number+`.<br>`+ string+`<input id="input`+ number+`"type="number"> <button onclick="enterQuestionFunctionsArray[`+(number-1)+`]()">Enter</button><button onclick="createQuestion`+ number+`()">Reset</button></p></li>`;
+        liHtmlArray[number-1] = html;
+        enterQuestionFunctionsArray[number-1] = createEnterFunction(number,answer);
+        fillInUlHtml();
+    }
+
+    function createResetFunction(number,string,answer){
+      return resetQuestion(number,string,answer);
+    }
+
+
+
     </script>
   <!-- //////////////////////////// -->
+  <ul id="questionsUl">
+
+  </ul>
+
+  <script>
+  // paragraph(
+  //   ` Last year, a brokerage office had <span id="sales1">`+getRandomInt(100,400,10)+`</span> sales .
+  //     After paying sales commissions to the associates, there was
+  //     <span id="remaining1">`+getRandomInt(150000,500000,100)+`</span> remaining.
+  //     The firm’s monthly expenses are expected to be
+  //     <span id="nextYear1">`+getRandomInt(10000,100000,100)+`</span> for the next year,
+  //     and the broker wants to make <span id="monthly1">`+getRandomInt(5000,40000,100)+`</span> monthly profit.
+  //     Assuming no change in the company dollar percentage, how many
+  //     transactions must the company have each month to meet its goal?`,
+  //     500
+  // )
+  </script>
+
   <p>
     1.
     <br>
