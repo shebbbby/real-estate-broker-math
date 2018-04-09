@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Real Estate MATH</title>
+
+    <!-- CSS GOES HERE -->
+    <style>
+    p{
+      margin: 20%;
+      font-size: 16px;
+    }
+    span{
+      font-weight: bold;
+    }
+    </style>
+
+  </head>
+
+  <!-- HTML GOES HERE -->
+  <body>
+    <script>
+    function getNumberWithinID(id){
+      return Number(document.querySelector('#'+id).innerHTML.replace(/,/g, '').replace(/\$/g, ''));
+    }
+    function getPercentWithinID(id){
+      return (Number(document.querySelector('#'+id).innerHTML.replace(/,/g, '').replace(/\$/g, ''))/100);
+    }
+    function changeIdValue(id, value){
+      document.querySelector('#'+id).innerHTML = value;
+    }
+    function getInputValue(inputId){
+      return Number(document.querySelector('#'+inputId).value);
+    }
+    function testQuestion(answer,input){
+      if(answer === input){
+      alert('CORRECT!' + ' Answer is: ' + answer);
+    }else{
+      alert('Wrong!' + ' Answer is: ' + answer);
+    }
+    }
+    function round(number){
+      return Math.round(number)
+    }
+    function getRandomInt(min, max, divisible) {
+    if(!divisible){
+      divisible = 1;
+    }
+    return Math.ceil((Math.floor(Math.random() * (max - min + 1)) + min) / divisible) * divisible;
+    }
+    function span(id,value){
+      return '<span id="'+id+'">'+value+'</span>'
+    }
+    function paragraph(number,string,answer){
+      var numberString = number.toString();
+      var html = `<p id="question'+numberString+'">
+      `+ numberString+`.<br>`+ string+`<input id="input
+      `+ numberString+`" type="number"> <button onclick="enterQuestion
+      `+ numberString+`()">Enter</button><button onclick="createQuestion
+      `+ numberString+`()">Reset</button></p>`;
+      return html;
+    }
+
+    </script>
+  <!-- //////////////////////////// -->
+  <p>
+    1.
+    <br>
+    Last year, a brokerage office had <span id="sales1">200</span> sales .
+    After paying sales commissions to the associates, there was
+    <span id="remaining1">$229,000</span> remaining.
+    The firm’s monthly expenses are expected to be
+    <span id="nextYear1">$30,000</span> for the next year,
+    and the broker wants to make <span id="monthly1">$8,000</span> monthly profit. Assuming no change in the company dollar percentage, how many transactions must the company have each month to meet its goal?
+  <input id="input1" type="number"> <button onclick="enterQuestion1()">Enter</button><button onclick="createQuestion1()">Reset</button>
+  </p>
+  <script>
+  function createQuestion1(){
+    changeIdValue('remaining1',getRandomInt(150000,500000,100));
+    changeIdValue('sales1',getRandomInt(100,400,10));
+    changeIdValue('nextYear1',getRandomInt(10000,100000,100));
+    changeIdValue('monthly1',getRandomInt(5000,40000,100));
+  }
+  createQuestion1();
+  function enterQuestion1(){
+    var perTransaction = getNumberWithinID('remaining1') / getNumberWithinID('sales1');
+    var howMuchNeedsToMake = ((getNumberWithinID('nextYear1') + (getNumberWithinID('monthly1'))) * 12);
+    var transactionsPerYear = howMuchNeedsToMake/perTransaction;
+    var answer = round(transactionsPerYear/12);
+    testQuestion(answer,getInputValue('input1'));
+  }
+  </script>
+  <!-- //////////////////////////// -->
+  <!-- //////////////////////////// -->
+  <p>
+    2.
+    <br>
+    The price per square foot for three comparable lots is
+    as follows: Lot 1: <span id="lot1">$18.25</span>; Lot 2: <span id="lot2">$18.25</span>; Lot 3:
+    <span id="lot3">$18.25</span>. Based on an inspection of the properties
+    and considerations such as shape and location, the
+    appraiser decides to use a weighted averaging
+    technique of <span id="weight1">30</span> percent weight for Lot 1, and <span id="weight2">35</span>
+    percent weight each for lots 2 and 3. What is the final
+    value estimate per square foot?
+    <input id="input2" type="number"> <button onclick="enterQuestion2()">Enter</button><button onclick="createQuestion2()">Reset</button>
+  </p>
+  <script>
+  // ------------------------------
+      function createQuestion2(){
+        changeIdValue('lot1',getRandomInt(15,30,.05) - (getRandomInt(1,20)/20));
+        changeIdValue('lot2',getRandomInt(15,30,.05) - (getRandomInt(1,20)/20));
+        changeIdValue('lot3',getRandomInt(15,30,.05) - (getRandomInt(1,20)/20));
+
+      }
+      createQuestion2();
+      function enterQuestion2(){
+        var answer = ((getNumberWithinID('lot1') * (getNumberWithinID('weight1')/100)) + (getNumberWithinID('lot2') * (getNumberWithinID('weight2')/100)) + (getNumberWithinID('lot3') * (getNumberWithinID('weight2')/100))).toFixed(2)
+        testQuestion(answer,getInputValue('input2'));
+      }
+  // ------------------------------
+  </script>
+  <!-- //////////////////////////// -->
+  <p>
+    3.
+    <br>
+    Comparable A sold for $<span id="question3Sold">$176,000</span>. The comparable is a
+    3-bedroom, 2-bath home. Comp A also has a built-in
+    Jacuzzi and redwood deck with the appraiser estimates
+    to be worth $<span id="question3Deck">$6,000</span>. However, Comp A is a smaller lot
+    compared with competing properties. The appraiser
+    adjusts & $<span id="question3SizeAdjust">$5,000</span> for the lot size. The subject property
+    is a 3-bedroom, two-bath home on a typical lot for the
+    neighborhood. What is the adjusted sale price of
+    Comparable A?
+    <input id="input3" type="number"> <button onclick="enterQuestion3()">Enter</button><button onclick="createQuestion3()">Reset</button>
+  </p>
+  <script>
+  function createQuestion3(){
+    changeIdValue('question3Sold',getRandomInt(100000,500000,100));
+    changeIdValue('question3Deck',getRandomInt(3000,20000,100));
+    changeIdValue('question3SizeAdjust',getRandomInt(1000,20000,.05));
+
+  }
+  createQuestion3();
+  function enterQuestion3(){
+    var answer = getNumberWithinID('question3Sold') - getNumberWithinID('question3Deck') + getNumberWithinID('question3SizeAdjust')
+    testQuestion(answer,getInputValue('input3'));
+  }
+  </script>
+  <!-- //////////////////////////// -->
+  <p>
+    4.
+    <br>
+    A limited partnership plans to purchase an apartment
+    building that has a monthly net income of $<span id="question4NetIncome">8,000</span>.
+    Monthly expenses total $<span id="question4Expenses">2,000</span>. If the partnership is to
+    get a <span id="question4Percent">12</span> percent return on its investment, what should
+    it pay for the property?
+    <input id="input4" type="number"> <button onclick="enterQuestion4()">Enter</button><button onclick="createQuestion4()">Reset</button>
+  </p>
+  <script>
+  function createQuestion4(){
+    changeIdValue('question4NetIncome',getRandomInt(7000,10000,100));
+    changeIdValue('question4Expenses',getRandomInt(3000,6000,100));
+    changeIdValue('question4Percent',getRandomInt(5,20,1));
+  }
+  createQuestion4();
+  function enterQuestion4(){
+    var answer = round((getNumberWithinID('question4NetIncome')*12) / (getNumberWithinID('question4Percent')/100));
+    testQuestion(answer,getInputValue('input4'));
+  }
+  </script>
+  <!-- //////////////////////////// -->
+  <!-- //////////////////////////// -->
+  <p>
+    5.
+    <br>
+    An income-producing property has a projected
+    effective gross income of $<span id="question5GrossIncome">90,000</span>. Expenses
+    are estimated at <span id="question5Percent">15</span> percent of effective gross
+    income. An appraiser has determined that an
+    appropriate capitalization rate is <span id="question5CapRate">9</span> percent.
+    What is the estimated market value of this property?
+    <input id="input5" type="number"> <button onclick="enterQuestion5()">Enter</button><button onclick="createQuestion5()">Reset</button>
+  </p>
+  <script>
+  function createQuestion5(){
+    changeIdValue('question5GrossIncome',getRandomInt(50000,200000,100));
+    changeIdValue('question5Percent',getRandomInt(10,40,1));
+    changeIdValue('question5CapRate',getRandomInt(10,22,1));
+  }
+  createQuestion5();
+  function enterQuestion5(){
+    var answer = round((getNumberWithinID('question5GrossIncome') - (getNumberWithinID('question5GrossIncome')*getPercentWithinID('question5Percent'))) / getPercentWithinID('question5CapRate'));
+    testQuestion(answer,getInputValue('input5'));
+  }
+  </script>
+  <!-- //////////////////////////// -->
+  <!-- //////////////////////////// -->
+  <p>
+    6.
+    <br>
+    A four bedroom, two bath home with a 3-car garage
+    sold for $<span id="question6Comp1">700,000</span>. A four bedroom two bath home
+    with a 2-car garage in that neighborhood sold for
+    $<span id="question6Comp2">687,000</span>. All other things being equal, the value of
+    the extra garage is:
+    <input id="input6" type="number"> <button onclick="enterQuestion6()">Enter</button><button onclick="createQuestion6()">Reset</button>
+  </p>
+  <script>
+  function createQuestion6(){
+    var comp1 = getRandomInt(300000,500000,100);
+    changeIdValue('question6Comp1',comp1);
+    changeIdValue('question6Comp2',comp1 - getRandomInt(5000,50000,100));
+  }
+  createQuestion6();
+  function enterQuestion6(){
+    var answer = getNumberWithinID('question6Comp1') - getNumberWithinID('question6Comp2');
+    testQuestion(answer,getInputValue('input6'));
+  }
+  </script>
+  <!-- //////////////////////////// -->
+  <!-- //////////////////////////// -->
+  <p>
+    7.
+    <br>
+    A one-story home has a foundation with dimensions
+    of <span id="question7Found1">40</span> feet by
+    <span id="question7Found2">55</span> feet, including a
+    <span id="question7Found3">22</span> foot by
+    <span id="question7Found4">20</span> foot
+    garage. What is the gross living area of the property?
+    <input id="input7" type="number"> <button onclick="enterQuestion7()">Enter</button><button onclick="createQuestion7()">Reset</button>
+  </p>
+  <script>
+  function createQuestion7(){
+    changeIdValue('question7Found1',getRandomInt(40,100,1));
+    changeIdValue('question7Found2',getRandomInt(40,100,1));
+    changeIdValue('question7Found3',getRandomInt(10,30,1));
+    changeIdValue('question7Found4',getRandomInt(10,30,1));
+  }
+  createQuestion7();
+  function enterQuestion7(){
+    var answer = (getNumberWithinID('question7Found1') * getNumberWithinID('question7Found2')) - (getNumberWithinID('question7Found3') * getNumberWithinID('question7Found4'))
+    testQuestion(answer,getInputValue('input7'));
+  }
+  </script>
+  <!-- //////////////////////////// -->
+  <!-- //////////////////////////// -->
+  <p>
+    8.
+    <br>
+    An appraiser is calculating the reproduction cost new
+    of a home, using the comparative square-foot method.
+    The appraiser measured the exterior dimensions of the
+    home, which were <span id="question8Found1">40</span>
+    feet by <span id="question8Found2">45</span> feet, plus a detached
+    garage measuring by <span id="question8Found3">22</span>
+    x <span id="question8Found4">30</span> feet. The appraiser
+    consults an accepted cost manual and estimates the
+    reproduction cost for heated and air-conditioned living
+    area to be $<span id="question8Val1">85.00</span> per square foot and the finished
+    free-standing garage to be $<span id="question8Val2">45.50</span> per square foot.
+    What is the reproduction cost new of the
+    improvements?
+    <input id="input8" type="number"> <button onclick="enterQuestion8()">Enter</button><button onclick="createQuestion8()">Reset</button>
+  </p>
+  <script>
+  function createQuestion8(){
+    changeIdValue('question8Found1',getRandomInt(30,100,5));
+    changeIdValue('question8Found2',getRandomInt(30,100,5));
+    changeIdValue('question8Found3',getRandomInt(10,40,5));
+    changeIdValue('question8Found4',getRandomInt(10,40,5));
+    changeIdValue('question8Val1',getRandomInt(60,100,5) - (getRandomInt(1,4)/4));
+    changeIdValue('question8Val2',getRandomInt(30,55,5) - (getRandomInt(1,4)/4));
+  }
+  createQuestion8();
+  function enterQuestion8(){
+    var answer =
+    (getNumberWithinID('question8Found1') * getNumberWithinID('question8Found2') * getNumberWithinID('question8Val1')) +
+    (getNumberWithinID('question8Found3') * getNumberWithinID('question8Found4') * getNumberWithinID('question8Val2'))
+    testQuestion(answer,getInputValue('input8'));
+  }
+  </script>
+  <!-- //////////////////////////// -->
+  <!-- //////////////////////////// -->
+  <p>
+    9.
+    <br>
+    Private mortgage insurance on a $<span id="question9Mortgage">300,000</span> mortgage
+    will protect the lender from loss in case of default up
+    to:
+    <input id="input9" type="number"> <button onclick="enterQuestion9()">Enter</button><button onclick="createQuestion9()">Reset</button>
+  </p>
+  <script>
+  function createQuestion9(){
+    changeIdValue('question9Mortgage',getRandomInt(100000,500000,1000));
+  }
+  createQuestion9();
+  function enterQuestion9(){
+    var answer = getNumberWithinID('question9Mortgage') * 0.25;
+    testQuestion(answer,getInputValue('input9'));
+  }
+  </script>
+  <!-- //////////////////////////// -->
+  <!-- //////////////////////////// -->
+  <p>
+    10.
+    <br>
+    How much is the state intangible tax on a new
+    mortgage of <span id="question10Mortgage">300,000</span>?
+    <input id="input10" type="number"> <button onclick="enterQuestion10()">Enter</button><button onclick="createQuestion10()">Reset</button>
+  </p>
+  <script>
+  function createQuestion10(){
+    changeIdValue('question10Mortgage',getRandomInt(100000,500000,1000));
+  }
+  createQuestion10();
+  function enterQuestion10(){
+    var answer = getNumberWithinID('question10Mortgage') * 0.002;
+    testQuestion(answer,getInputValue('input10'));
+  }
+  </script>
+  <!-- //////////////////////////// -->
+  <!-- //////////////////////////// -->
+  <p>
+    11.
+    <br>
+    A buyer is shopping for a new $<span id="question11Mortgage">300,000</span> mortgage.
+    He expects to live in him new home for about four
+    years. He can get a <span id="question11Years"></span>-year <span id="question11Rate"></span> fixed fixed-rate
+    mortgage with principal and interest payments of
+    $<span id="question11Payment1"></span> with no points. He can also get a 4.00
+    percent mortgage loan with principal and interest
+    payments of $<span id="question11Payment2"></span>  if he pays <span id="question11Points"></span> points. Ignoring the
+    time value of money, how many months will it take for
+    the buyer to break even if he takes the lower interest
+    rate loan?
+    <input id="input11" type="number"> <button onclick="enterQuestion11()">Enter</button><button onclick="createQuestion11()">Reset</button>
+  </p>
+  <script>
+  function createQuestion11(){
+    var monthlyPeriodBinary = getRandomInt(1,2,1);
+    if (monthlyPeriodBinary === 1) {
+      var years = 15;
+    }else{
+      years = 30;
+    }
+    var M; //monthly mortgage payment
+    var P = getRandomInt(100000,1000000,1000); //principle / initial amount borrowed
+    var yearlyI = getRandomInt(3,8,1);  //monthly interest rate
+    var I = yearlyI / 100 / 12;
+    var N = years * 12; //number of payments months
+    //monthly mortgage payment
+    M = monthlyPayment(P, N, I);
+
+    var points = getRandomInt(1,10,1);
+    var monthlyPoints = (points*(1/8))/100/12
+    var payment2 = monthlyPayment(P,N,I-(monthlyPoints));
+
+console.log(M);
+
+function monthlyPayment(p, n, i) {
+  return p * i * (Math.pow(1 + i, n)) / (Math.pow(1 + i, n) - 1);
+}
+    changeIdValue('question11Mortgage',P);
+    changeIdValue('question11Payment1',round(M));
+    changeIdValue('question11Rate',yearlyI);
+    changeIdValue('question11Points',points);
+    changeIdValue('question11Payment2',round(payment2));
+    changeIdValue('question11Years',years);
+  }
+  createQuestion11();
+  function enterQuestion11(){
+    var answer = round((getNumberWithinID('question11Mortgage') * getPercentWithinID('question11Points')) / (round((getNumberWithinID('question11Payment1'))) - round((getNumberWithinID('question11Payment2')))));
+    testQuestion(answer,getInputValue('input11'));
+  }
+  </script>
+  <!-- //////////////////////////// -->
+<!-- //////////////////////////// -->
+<p>
+  12.
+  <br>
+  An apartment building had net operating income
+  last year of $<span id="question12NOI">98,600</span>.
+  The annual debt service was
+  $<span id="question12Debt">75,186</span>.
+  Depreciation was $<span id="question12Depreciation">17,485</span> and income
+  taxes were $<span id="question12Tax">8,235</span>. What was the after-tax cash flow?
+  <input id="input12" type="number"> <button onclick="enterQuestion12()">Enter</button><button onclick="createQuestion12()">Reset</button>
+</p>
+<script>
+function createQuestion12(){
+  changeIdValue('question12NOI',getRandomInt(80000,300000,100));
+  changeIdValue('question12Debt',getRandomInt(40000,80000,1));
+  changeIdValue('question12Depreciation',getRandomInt(10000,40000,5));
+  changeIdValue('question12Tax',getRandomInt(6000,20000,5));
+}
+createQuestion12();
+function enterQuestion12(){
+  var answer = getNumberWithinID('question12NOI') - getNumberWithinID('question12Debt') - getNumberWithinID('question12Tax');
+  testQuestion(answer,getInputValue('input12'));
+}
+</script>
+<!-- //////////////////////////// -->
+<!-- //////////////////////////// -->
+<p>
+  13.
+  <br>
+  An apartment building had net operating income of
+  $<span id="question13NOI">98,600</span>.
+  Expenses were $<span id="question13Expenses">98,600</span>, including
+  reserves for replacements of $<span id="question13Reserves">98,600</span>. Interest
+  was <span id="question13Interest">98,600</span>, and depreciation was $<span id="question13Depreciation">98,600</span>.
+  What is the property’s taxable income?
+<input id="input13" type="number"> <button onclick="enterQuestion13()">Enter</button><button onclick="createQuestion13()">Reset</button>
+</p>
+<script>
+function createQuestion13(){
+  var noi = getRandomInt(300000,2000000,1000);
+  changeIdValue('question13NOI', noi);
+  changeIdValue('question13Expenses', getRandomInt(noi/2,noi,100));
+  changeIdValue('question13Reserves',getRandomInt(noi*.1,noi*.2,100));
+  changeIdValue('question13Interest',getRandomInt(noi/2,noi*.75,100));
+  changeIdValue('question13Depreciation',getRandomInt(noi*.1,noi*.2,100));
+}
+createQuestion13();
+function enterQuestion13(){
+  var answer = getNumberWithinID('question13NOI') + getNumberWithinID('question13Reserves') - getNumberWithinID('question13Interest') - getNumberWithinID('question13Depreciation');
+  testQuestion(answer,getInputValue('input13'));
+}
+</script>
+<!-- //////////////////////////// -->
+<!-- //////////////////////////// -->
+<p>
+  14.
+  <br>
+  A woman buys an office building on a 30-acre site for
+  $<span id="question14Purchase"></span>. She pays the following costs for the
+  acquisition: appraisal $<span id="question14Appraisal"></span>, survey $<span id="question14Survey"></span>, title
+  insurance <span id="question14Insurance"></span>. The land represents <span id="question14Percent"></span>% of the total
+  value. What is the depreciable basis of her building?
+  <input id="input14" type="number"> <button onclick="enterQuestion14()">Enter</button><button onclick="createQuestion14()">Reset</button>
+</p>
+<script>
+function createQuestion14(){
+  changeIdValue('question14Purchase', getRandomInt(1000000,2000000,1000));
+  changeIdValue('question14Appraisal', getRandomInt(3000,20000,100));
+  changeIdValue('question14Survey', getRandomInt(3000,20000,100));
+  changeIdValue('question14Insurance', getRandomInt(10000,30000,100));
+  changeIdValue('question14Percent', getRandomInt(10,30,1));
+}
+createQuestion14();
+function enterQuestion14(){
+  var answer = round((getNumberWithinID('question14Purchase') + getNumberWithinID('question14Appraisal') + getNumberWithinID('question14Survey') + getNumberWithinID('question14Insurance')) * (1 - getPercentWithinID('question14Percent')))
+  testQuestion(answer,getInputValue('input14'));
+}
+</script>
+<!-- //////////////////////////// -->
+<!-- //////////////////////////// -->
+<p>
+  15.
+  <br>
+  A woman buys an office building on a 30-acre site for
+  $<span id="question15Purchase"></span>. She pays the following costs for the
+  acquisition: appraisal $<span id="question15Appraisal"></span>, survey $<span id="question15Survey"></span>, title
+  insurance <span id="question15Insurance"></span>. The land represents <span id="question15Percent"></span>% of the total
+  value. What is the annual depreciation on this building?
+  <input id="input15" type="number"> <button onclick="enterQuestion15()">Enter</button><button onclick="createQuestion15()">Reset</button>
+</p>
+<script>
+function createQuestion15(){
+  changeIdValue('question15Purchase', getRandomInt(1000000,2000000,1000));
+  changeIdValue('question15Appraisal', getRandomInt(3000,20000,100));
+  changeIdValue('question15Survey', getRandomInt(3000,20000,100));
+  changeIdValue('question15Insurance', getRandomInt(10000,30000,100));
+  changeIdValue('question15Percent', getRandomInt(10,30,1));
+}
+createQuestion15();
+function enterQuestion15(){
+  var answer = round(((getNumberWithinID('question15Purchase') + getNumberWithinID('question15Appraisal') + getNumberWithinID('question15Survey') + getNumberWithinID('question15Insurance')) * (1 - getPercentWithinID('question15Percent')))/39);
+  testQuestion(answer,getInputValue('input15'));
+}
+</script>
+<!-- //////////////////////////// -->
+<!-- //////////////////////////// -->
+<p>
+  16.
+  <br>
+  An investor sells property he has owned for <span id="question16Years"></span>
+  years for $<span id="question16Price"></span>. The investor has taken
+  depreciation of $<span id="question16Depreciation"></span> for each of those <span id="question16Years2"></span>
+  years. What is the amount of tax owed because of
+  depreciation recapture?
+  <input id="input16" type="number"> <button onclick="enterQuestion16()">Enter</button><button onclick="createQuestion16()">Reset</button>
+</p>
+<script>
+function createQuestion16(){
+  var years = getRandomInt(5,20,1);
+  changeIdValue('question16Years', years);
+  changeIdValue('question16Years2', years);
+  changeIdValue('question16Price', getRandomInt(1000000,5000000,5000));
+  changeIdValue('question16Depreciation', getRandomInt(30000,1000000,1000));
+}
+createQuestion16();
+function enterQuestion16(){
+  var answer = round(getNumberWithinID('question16Depreciation') * getNumberWithinID('question16Years') * 0.25);
+  testQuestion(answer,getInputValue('input16'));
+}
+</script>
+<!-- //////////////////////////// -->
+<!-- //////////////////////////// -->
+<p>
+  17.
+  <br>
+  A retailer rents space in a regional mall and pays a
+  base rent of $<span id="question17Rent"></span> and <span id="question17Percent"></span>% of their monthly sales.
+  Above what annual sales level would the store
+  have to pay additional rent over the base rent?
+  <input id="input17" type="number"> <button onclick="enterQuestion17()">Enter</button><button onclick="createQuestion17()">Reset</button>
+</p>
+<script>
+function createQuestion17(){
+  changeIdValue('question17Rent', getRandomInt(5000,15000,50));
+  changeIdValue('question17Percent', getRandomInt(1,12,1));
+}
+createQuestion17();
+function enterQuestion17(){
+  var answer = round(getNumberWithinID('question17Rent') / getPercentWithinID('question17Percent') * 12);
+  testQuestion(answer,getInputValue('input17'));
+}
+</script>
+<!-- //////////////////////////// -->
+<!-- //////////////////////////// -->
+<p>
+  18.
+  <br>
+  If net operating income is $<span id="question18NOI"></span> and before-tax
+  cash flow is $<span id="question18BTCF"></span>, how much down payment
+  would an investor be will to make if he wants a
+  <span id="question18Percent"></span>% equity dividend rate?
+<input id="input18" type="number"> <button onclick="enterQuestion18()">Enter</button><button onclick="createQuestion18()">Reset</button>
+</p>
+<script>
+function createQuestion18(){
+  var noi = getRandomInt(100000,500000,100);
+  changeIdValue('question18NOI', noi);
+  changeIdValue('question18BTCF', getRandomInt(noi*.1,noi*.3,50));
+  changeIdValue('question18Percent', getRandomInt(8,22,1));
+}
+createQuestion18();
+function enterQuestion18(){
+  var answer = round(getNumberWithinID('question18BTCF') / getPercentWithinID('question18Percent'));
+  testQuestion(answer,getInputValue('input18'));
+}
+</script>
+<!-- //////////////////////////// -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <!-- JAVASCRIPT GOES HERE -->
+    <script>
+
+
+
+
+    </script>
+  </body>
+</html>
